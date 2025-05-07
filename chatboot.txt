@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string toLower(string str) {
+    for (char &c : str) {
+        c = tolower(c);
+    }
+    return str;
+}
+
+string chatbot_response(string input) {
+    input = toLower(input);
+
+    if (input == "hello" || input == "hi" || input == "hey" || input == "1")
+        return "Hello! Welcome to our grocery store. How can I help you today?";
+    else if (input == "how are you" || input == "2")
+        return "I'm just a bot, but I'm here to assist you with groceries!";
+    else if (input == "order status" || input == "track order" || input == "3")
+        return "Please provide your order ID to check the status.";
+    else if (input == "shipping time" || input == "delivery time" || input == "4")
+        return "We offer same-day delivery and standard shipping (3-5 business days).";
+    else if (input == "return policy" || input == "5")
+        return "You can return items within 7 days if unopened.";
+    else if (input == "thank you" || input == "thanks" || input == "6")
+        return "You're welcome! Let me know if you need anything else.";
+    else if (input == "price" || input == "cost" || input == "7")
+        return "Please specify the product name to check its price.";
+    else if (input == "milk" || input == "8")
+        return "Milk is 30rs per liter.";
+    else if (input == "eggs" || input == "9")
+        return "A dozen eggs cost 80rs.";
+    else if (input == "rice" || input == "10")
+        return "Rice is 50rs per kg.";
+    else if (input == "vegetables" || input == "veggies" || input == "11")
+        return "We have fresh vegetables. What are you looking for?";
+    else if (input == "fruits" || input == "12")
+        return "We have apples, bananas, and oranges.";
+    else if (input == "snacks" || input == "13")
+        return "We have chips, biscuits, and chocolates.";
+    else if (input == "beverages" || input == "drinks" || input == "14")
+        return "We have soft drinks, juices, and water.";
+    else if (input == "buy" || input == "order" || input == "15")
+        return "You can place an order on our website or visit our store.";
+    else if (input == "payment methods" || input == "16")
+        return "We accept cash, cards, and UPI.";
+    else if (input == "store hours" || input == "timing" || input == "17")
+        return "Our store is open from 8 AM to 10 PM daily.";
+    else if (input == "location" || input == "address" || input == "18")
+        return "We are located at XYZ Market, Main Street.";
+    else if (input == "bye" || input == "exit" || input == "19")
+        return "Goodbye! Happy shopping! 🛍";
+
+    return "Sorry, I didn't understand that. Can you try again?";
+}
+
+int main() {
+    string input;
+    cout << "Welcome to our Grocery Chatbot! Type 'exit' to quit.\n";
+
+    while (true) {
+        cout << "You: ";
+        getline(cin, input);
+        if (toLower(input) == "exit" || toLower(input) == "bye") {
+            cout << "Chatbot: Goodbye! Happy shopping! 🛍" << endl;
+            break;
+        }
+        cout << "Chatbot: " << chatbot_response(input) << endl;
+    }
+
+    return 0;
+}

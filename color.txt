@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Adds an undirected edge to the graph
+void addEdge(vector<vector<int>>& graph, int edge1, int edge2) {
+    graph[edge1][edge2] = 1;
+    graph[edge2][edge1] = 1;
+}
+
+// Check if it's safe to assign color j to vertex i
+bool safeToAssign(int i, int j, const vector<vector<int>>& graph, int v, vector<int>& color) {
+    for (int k = 0; k < v; k++) {
+        if (graph[i][k] == 1 && color[k] == j) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Recursive backtracking function
+bool coloringUtil(const vector<vector<int>>& graph, int m, int v, int i, vector<int>& color) {
+    if (i == v) return true;
+
+    for (int j = 1; j <= m; j++) { // Start color index from 1
+        if (safeToAssign(i, j, graph, v, color)) {
+            color[i] = j;
+            if (coloringUtil(graph, m, v, i + 1, color)) return true;
+            color[i] = 0;
+        }
+    }
+    return false;
+}
+
+// Wrapper function
+bool graphColoring(vector<vector<int>>& graph, int m, int v) {
+    vector<int> color(v, 0); // Initialize all colors to 0
+    if (coloringUtil(graph, m, v, 0, color)) {
+        cout << "Coloring possible. Assigned colors:\n";
+        for (int i = 0; i < v; i++) {
+            cout << "Vertex " << i << " -> Color " << color[i] << "\n";
+        }
+        return true;
+    } else {
+        cout << "Coloring not possible with " << m << " colors.\n";
+        return false;
+    }
+}
+
+int main() {
+    int v, e, m;
+    cout << "Enter number of vertices: ";
+    cin >> v;
+    cout << "Enter number of edges: ";
+    cin >> e;
+    cout << "Enter number of colors: ";
+    cin >> m;
+
+    vector<vector<int>> graph(v, vector<int>(v, 0));
+
+    cout << "Enter edges (format: u v):\n";
+    for (int i = 0; i < e; i++) {
+        int u, vtx;
+        cin >> u >> vtx;
+        addEdge(graph, u, vtx);
+    }
+
+    graphColoring(graph, m, v);
+    return 0;
+}
